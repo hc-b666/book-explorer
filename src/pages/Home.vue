@@ -26,7 +26,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
   height: 100%;
   display: flex;
@@ -35,9 +35,16 @@ export default {
 }
 
 .search-container {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 20px;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 input {
@@ -46,5 +53,9 @@ input {
   border-radius: 6px;
   outline: none;
   background-color: #fff;
+
+  @media screen and (max-width: 920px) {
+    width: 100%;
+  }
 }
 </style>

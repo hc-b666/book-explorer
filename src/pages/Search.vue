@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <h3>Total found: {{ totalResults }}</h3>
     <div class="search-wrapper">
       <input type="text" v-model="query" />
     </div>
@@ -60,10 +61,22 @@ export default {
   watch: {
     query: "searching",
   },
+  computed: {
+    totalResults() {
+      return this.books.length;
+    },
+    hasResults() {
+      return this.totalResults > 0;
+    },
+  }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+h3 {
+  color: white;
+}
+
 .search-wrapper {
   display: flex;
   align-items: center;
@@ -77,12 +90,30 @@ input {
   border-radius: 6px;
   outline: none;
   background-color: #fff;
+
+  @media screen and (max-width: 920px) {
+    width: 100%;
+  }
 }
 
 .results-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 920px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
 }
 
 .custom-card {

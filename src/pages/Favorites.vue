@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    Favorites page
+    Favorites page (not implemented yet)
   </v-container>
 </template>
 
