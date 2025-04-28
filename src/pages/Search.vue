@@ -1,6 +1,8 @@
 <template>
   <v-container>
-    {{ query }}
+    <div class="search-wrapper">
+      <input type="text" v-model="query" />
+    </div>
     <div class="results-container">
       <v-card v-for="book in books" :key="book.key">
         <v-card-title>
@@ -31,6 +33,7 @@
 
 <script>
 import api from "@/api";
+import { debounce } from "lodash";
 
 export default {
   name: "SearchPage",
@@ -40,17 +43,42 @@ export default {
   }),
   mounted() {
     this.query = this.$route.query.query;
-
-    api.get(`/search.json?q=${this.query}`)
-      .then((res) => {
-        console.log(res.data.docs);
-        this.books = res.data.docs;
-      });
-  }
+    this.fetchBooks();
+  },
+  methods: {
+    fetchBooks() {
+      api.get(`/search.json?q=${this.query}`)
+        .then((res) => {
+          console.log(res.data.docs);
+          this.books = res.data.docs;
+        });
+    },
+    searching: debounce(function () {
+      this.fetchBooks();
+    }, 300)
+  },
+  watch: {
+    query: "searching",
+  },
 }
 </script>
 
 <style scoped>
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  width: 600px;
+  margin-bottom: 32px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  outline: none;
+  background-color: #fff;
+}
+
 .results-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
