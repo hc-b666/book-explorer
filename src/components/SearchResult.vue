@@ -49,31 +49,3 @@ export default {
   }
 }
 </script>
-<style>
-.results-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (max-width: 920px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.book-info {
-  padding: 16px;
-}
-
-.btn-like {
-  color: white !important;
-  background-color: blue !important;
-}
-</style>
