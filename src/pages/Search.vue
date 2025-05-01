@@ -4,55 +4,48 @@
     <div class="search-wrapper">
       <input type="text" v-model="query" />
     </div>
-    <div class="results-container">
-      <v-card v-for="book in books" :key="book.key">
-        <v-card-title>
-          {{ book.title }}
-        </v-card-title>
-
-        <v-card-subtitle>
-          <span v-for="(author, idx) in book.author_name" :key="idx">
-            {{ author }},
-          </span>
-        </v-card-subtitle>
-
-        <v-img v-if="book.cover_i" :src="`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`"
-          height="300px"></v-img>
-
-        <v-row class="book-info">
-          <v-card-actions>
-            Languages: {{ book.language?.length ? book.language.length : 1 }}
-          </v-card-actions>
-          <v-card-actions>
-            Publish year: {{ book.first_publish_year }}
-          </v-card-actions>
-        </v-row>
-      </v-card>
-    </div>
+    <search-result :books="books" />
   </v-container>
 </template>
 
 <script>
 import api from "@/api";
 import { debounce } from "lodash";
+import SearchResult from "@/components/SearchResult.vue";
 
 export default {
   name: "SearchPage",
+  components: {
+    SearchResult
+  },
   data: () => ({
     query: "",
     books: [],
+    page: 1,
+    searchingStatus: {
+      message: "",
+      isError: false,
+      isLoading: false
+    }
   }),
-  mounted() {
+  async mounted() {
     this.query = this.$route.query.query;
-    this.fetchBooks();
+    await this.fetchBooks();
   },
   methods: {
-    fetchBooks() {
-      api.get(`/search.json?q=${this.query}`)
-        .then((res) => {
-          console.log(res.data.docs);
-          this.books = res.data.docs;
-        });
+    async fetchBooks() {
+      this.searchingStatus.isLoading = true;
+
+      try {
+        const response = await api.get(`/search.json?q=${this.query}&page=${this.page}`);
+        console.log(response.data.docs);
+        this.books = response.data.docs;
+      } catch (error) {
+        this.searchingStatus.isError = true;
+        throw new Error(error);
+      } finally {
+        this.searchingStatus.isLoading = false;
+      }
     },
     searching: debounce(function () {
       this.fetchBooks();
@@ -94,34 +87,5 @@ input {
   @media screen and (max-width: 920px) {
     width: 100%;
   }
-}
-
-.results-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (max-width: 920px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-
-}
-
-.custom-card {
-  background-color: white;
-  border-radius: 8px;
-}
-
-.book-info {
-  padding: 16px;
 }
 </style>
