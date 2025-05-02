@@ -1,8 +1,11 @@
 <template>
   <v-container>
-    <h3>Total found: {{ totalResults }}</h3>
+    <h3>Total found: {{ numFound }}</h3>
     <div class="search-wrapper">
       <input type="text" v-model="query" />
+    </div>
+    <div class="text-center">
+      <v-pagination v-model="page" :length="totalPages" rounded="circle"></v-pagination>
     </div>
     <search-result :books="books" />
   </v-container>
@@ -22,6 +25,8 @@ export default {
     query: "",
     books: [],
     page: 1,
+    totalPages: 0,
+    numFound: 0,
     searchingStatus: {
       message: "",
       isError: false,
@@ -40,6 +45,8 @@ export default {
         const response = await api.get(`/search.json?q=${this.query}&page=${this.page}`);
         console.log(response.data.docs);
         this.books = response.data.docs;
+        this.numFound = response.data.numFound;
+        this.totalPages = Math.ceil(response.data.numFound / 100);
       } catch (error) {
         this.searchingStatus.isError = true;
         throw new Error(error);
@@ -53,6 +60,7 @@ export default {
   },
   watch: {
     query: "searching",
+    page: "fetchBooks",
   },
   computed: {
     totalResults() {
