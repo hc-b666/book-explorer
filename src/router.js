@@ -24,6 +24,11 @@ const routes = [
     path: "/favorites",
     component: () => import("./pages/Favorites.vue"),
   },
+  {
+    name: "authors",
+    path: "/authors/:id",
+    component: () => import("./pages/AuthorPage.vue"),
+  },
 ];
 
 export default new VueRouter({

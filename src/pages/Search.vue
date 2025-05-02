@@ -43,7 +43,6 @@ export default {
 
       try {
         const response = await api.get(`/search.json?q=${this.query}&page=${this.page}`);
-        console.log(response.data.docs);
         this.books = response.data.docs;
         this.numFound = response.data.numFound;
         this.totalPages = Math.ceil(response.data.numFound / 100);
