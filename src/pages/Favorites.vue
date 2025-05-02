@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="results-container">
-      <v-card v-for="book in getFavs" :key="book.key">
+      <v-card v-for="(book, id) in getFavs" :key="id">
         <v-card-title>
           {{ book.title }}
         </v-card-title>
@@ -23,6 +23,11 @@
             Publish year: {{ book.first_publish_year }}
           </v-card-actions>
         </v-row>
+        <v-card-actions>
+          <v-btn class="btn-remove" @click="removeFav(id)">
+            Remove
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </div>
   </v-container>
@@ -33,6 +38,11 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: "FavoritesPage",
+  methods: {
+    removeFav(id) {
+      this.$store.commit("removeFav", id);
+    }
+  },
   computed: {
     ...mapGetters(['getFavs']),
   }

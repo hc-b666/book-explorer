@@ -34,7 +34,7 @@ export default new Vuex.Store({
     },
     author(state) {
       return state.author;
-    }
+    },
   },
   mutations: {
     isLoading(state, payload) {
@@ -49,9 +49,12 @@ export default new Vuex.Store({
     addFav(state, payload) {
       state.favs.push(payload);
     },
+    removeFav(state, payload) {
+      state.favs = state.favs.filter((_, idx) => idx !== payload);
+    },
     setAuthor(state, payload) {
       state.author = payload;
-    }
+    },
   },
   actions: {
     async searchBooks({ commit }, payload) {
@@ -69,6 +72,10 @@ export default new Vuex.Store({
       }
     },
 
+    /**
+     * Fetch author by Id
+     * @param {string} payload // author id
+     */
     async fetchAuthor({ commit }, payload) {
       commit("isLoading", true);
       try {
@@ -79,7 +86,7 @@ export default new Vuex.Store({
       } finally {
         commit("isLoading", false);
       }
-    }
+    },
   },
   plugins: [vuexLocalStorage.plugin],
 });
