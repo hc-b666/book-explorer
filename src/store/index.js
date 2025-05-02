@@ -11,6 +11,12 @@ const vuexLocalStorage = new VuexPersist({
   storage: window.localStorage,
 });
 
+const createToast = (text, status) => ({
+  text,
+  status,
+  id: Math.random() * 1000,
+});
+
 export default new Vuex.Store({
   state: {
     isLoading: false,
@@ -18,6 +24,7 @@ export default new Vuex.Store({
     books: [],
     favs: [],
     author: null,
+    toasts: [],
   },
   getters: {
     isLoading(state) {
@@ -29,11 +36,14 @@ export default new Vuex.Store({
     books(state) {
       return state.books;
     },
-    getFavs: (state) => {
+    getFavs(state) {
       return state.favs;
     },
     author(state) {
       return state.author;
+    },
+    toasts(state) {
+      return state.toasts;
     },
   },
   mutations: {
@@ -54,6 +64,15 @@ export default new Vuex.Store({
     },
     setAuthor(state, payload) {
       state.author = payload;
+    },
+    addToast(state, payload) {
+      const { text, status } = payload;
+      const toast = createToast(text, status);
+
+      state.toasts.push(toast);
+      setTimeout(() => {
+        state.toasts = state.toasts.filter((t) => t.id !== toast.id);
+      }, 2000);
     },
   },
   actions: {

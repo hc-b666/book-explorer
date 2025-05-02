@@ -1,31 +1,18 @@
 <template>
   <v-app class="app">
-    
-    <v-container>
-      <v-app-bar rounded>
-        <router-link to="/">
-          <v-btn dark>Home</v-btn>
-        </router-link>
-        <router-link to="/favorites">
-          <v-btn class="ml-3" dark>Favorites</v-btn>
-        </router-link>
-      </v-app-bar>
-    </v-container>
+    <the-navbar />
+    <base-toaster />
     <router-view />
   </v-app>
 </template>
 
 <script>
+import BaseToaster from './components/BaseToaster.vue';
+import TheNavbar from './components/TheNavbar.vue';
 
 export default {
-  name: 'App',
-
-  components: {
-  },
-
-  data: () => ({
-    //
-  }),
+  name: "App",
+  components: { TheNavbar, BaseToaster },
 };
 </script>
 
