@@ -1,78 +1,74 @@
 <template>
   <v-container>
-    <h3>Total found: {{ numFound }}</h3>
     <div class="search-wrapper">
       <input type="text" v-model="query" />
     </div>
     <div class="text-center">
       <v-pagination v-model="page" :length="totalPages" rounded="circle"></v-pagination>
     </div>
-    <search-result :books="books" />
+    <div v-if="isLoading" class="spinner-wrapper">
+      <spinner />
+    </div>
+    <div v-if="!isLoading">
+      <search-result :books="books" />
+    </div>
   </v-container>
 </template>
 
 <script>
-import api from "@/api";
 import { debounce } from "lodash";
 import SearchResult from "@/components/SearchResult.vue";
+import Spinner from "vue-simple-spinner";
 
 export default {
   name: "SearchPage",
   components: {
-    SearchResult
+    SearchResult,
+    Spinner,
   },
   data: () => ({
     query: "",
-    books: [],
     page: 1,
-    totalPages: 0,
-    numFound: 0,
-    searchingStatus: {
-      message: "",
-      isError: false,
-      isLoading: false
-    }
   }),
-  async mounted() {
+  mounted() {
     this.query = this.$route.query.query;
-    await this.fetchBooks();
+    this.fetchBooks();
   },
   methods: {
-    async fetchBooks() {
-      this.searchingStatus.isLoading = true;
-
-      try {
-        const response = await api.get(`/search.json?q=${this.query}&page=${this.page}`);
-        this.books = response.data.docs;
-        this.numFound = response.data.numFound;
-        this.totalPages = Math.ceil(response.data.numFound / 100);
-      } catch (error) {
-        this.searchingStatus.isError = true;
-        throw new Error(error);
-      } finally {
-        this.searchingStatus.isLoading = false;
-      }
+    fetchBooks() {
+      this.$store.dispatch("searchBooks", { query: this.query, page: this.page });
     },
     searching: debounce(function () {
-      this.fetchBooks();
-    }, 300)
+      this.$store.dispatch("searchBooks", { query: this.query, page: this.page });
+    }, 300),
   },
   watch: {
     query: "searching",
     page: "fetchBooks",
   },
   computed: {
-    totalResults() {
-      return this.books.length;
+    isLoading() {
+      return this.$store.getters.isLoading;
     },
-    hasResults() {
-      return this.totalResults > 0;
+    totalPages() {
+      return this.$store.getters.totalPages;
+    },
+    books() {
+      return this.$store.getters.books;
     },
   }
 }
 </script>
 
 <style scoped lang="scss">
+.spinner-wrapper {
+  width: 100%;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 h3 {
   color: white;
 }
