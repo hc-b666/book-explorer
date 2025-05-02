@@ -40,6 +40,10 @@ export default {
   name: "FavoritesPage",
   methods: {
     removeFav(id) {
+      this.$store.commit("addToast", {
+        text: "Removed succesfully",
+        status: "success",
+      });
       this.$store.commit("removeFav", id);
     }
   },
