@@ -1,8 +1,10 @@
 <template>
   <div class="results-container">
-    <v-card v-for="book in books" :key="book.key">
+    <v-card v-for="book in books" :key="book.key" class="book-wrapper">
       <v-card-title>
-        {{ book.title }}
+        <div class="book-title">
+          {{ book.title }}
+        </div>
       </v-card-title>
 
       <v-card-subtitle>
@@ -60,6 +62,16 @@ export default {
 </script>
 
 <style scoped>
+.book-wrapper {
+  overflow: hidden;
+}
+
+.book-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .no-image {
   width: 100%;
   height: 200px;
