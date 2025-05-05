@@ -8,7 +8,9 @@ Vue.use(Vuex);
 
 const vuexLocalStorage = new VuexPersist({
   key: "vuex",
-  reducer: (state) => state,
+  reducer: (state) => ({
+    favs: state.favs,
+  }),
   storage: window.localStorage,
 });
 
