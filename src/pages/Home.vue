@@ -2,12 +2,17 @@
   <v-container>
     <div class="search-container">
       <input type="search" v-model="query" @keydown.enter="search" placeholder="Query" />
-      <v-btn @click="search" dark>Search</v-btn>
+      <v-btn @click="search" dark>
+        <i class="material-icons">search</i>
+        <v-icon icon="md:home"></v-icon>
+        <span style="margin-left: 12px;">Search</span>
+      </v-btn>
     </div>
   </v-container>
 </template>
 
 <script>
+
 export default {
   name: "HomePage",
   data: () => ({

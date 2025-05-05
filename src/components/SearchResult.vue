@@ -54,11 +54,7 @@ export default {
   },
   methods: {
     likeFav(v) {
-      this.$store.commit("addToast", {
-        text: "Added successfully",
-        status: "success",
-      });
-      this.addFav(v);
+      this.$store.dispatch("addFavWithToast", v);
     },
     ...mapMutations(['addFav']),
   },

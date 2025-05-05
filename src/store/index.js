@@ -2,6 +2,7 @@ import api from "@/api";
 import Vue from "vue";
 import Vuex from "vuex";
 import VuexPersist from "vuex-persist";
+import isEqual from "lodash/isEqual";
 
 Vue.use(Vuex);
 
@@ -105,6 +106,19 @@ export default new Vuex.Store({
       } finally {
         commit("isLoading", false);
       }
+    },
+    addFavWithToast({ commit, state }, payload) {
+      const ok = state.favs.some((fav) => isEqual(fav, payload));
+      if (ok) {
+        commit("addToast", {
+          text: "Already in favorites!",
+          status: "warning",
+        });
+        return;
+      }
+
+      commit("addFav", payload);
+      commit("addToast", { text: "Added to favorites!", status: "success" });
     },
   },
   plugins: [vuexLocalStorage.plugin],
