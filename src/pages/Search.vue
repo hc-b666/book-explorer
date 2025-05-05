@@ -15,6 +15,10 @@
   </v-container>
 </template>
 
+<!-- TODO -->
+<!-- bug with fetching books -->
+<!-- when page changes it fetchs two times -->
+
 <script>
 import { debounce } from "lodash";
 import SearchResult from "@/components/SearchResult.vue";
@@ -32,19 +36,27 @@ export default {
   }),
   mounted() {
     this.query = this.$route.query.query;
-    this.fetchBooks();
+    this.page = parseInt(this.$route.query.page);
+    this.loadBooks();
   },
   methods: {
     fetchBooks() {
       this.$store.dispatch("searchBooks", { query: this.query, page: this.page });
     },
+    loadBooks() {
+      this.fetchBooks();
+    },
     searching: debounce(function () {
-      this.$store.dispatch("searchBooks", { query: this.query, page: this.page });
+      this.fetchBooks();
     }, 300),
+    updatePage() {
+      if (parseInt(this.$route.query.page) === this.page) return;
+      this.$router.push({ query: { ...this.$route.query, page: this.page } });
+    },
   },
   watch: {
     query: "searching",
-    page: "fetchBooks",
+    page: ["loadBooks", "updatePage"],
   },
   computed: {
     isLoading() {

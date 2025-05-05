@@ -24,7 +24,10 @@ export default {
 
       this.$router.push({
         name: "search",
-        query: { query: this.query },
+        query: { 
+          query: this.query,
+          page: 1,
+        },
       });
     }
   },
