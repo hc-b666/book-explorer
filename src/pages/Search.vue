@@ -3,7 +3,7 @@
     <div class="search-wrapper">
       <input type="text" v-model="query" title="Search bar" />
     </div>
-    <div class="text-center" style="margin-bottom: 20px;">
+    <div v-if="totalPages > 0" class="text-center" style="margin-bottom: 20px;">
       <v-pagination v-model="page" :length="totalPages" rounded="circle" title="Pagination"></v-pagination>
     </div>
     <div v-if="isLoading" class="spinner-wrapper">
@@ -32,7 +32,7 @@ export default {
   }),
   mounted() {
     this.query = this.$route.query.query;
-    this.page = parseInt(this.$route.query.page);
+    this.page = this.$route.query.page ? parseInt(this.$route.query.page) : 0;
     this.loadBooks();
   },
   methods: {

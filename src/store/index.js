@@ -88,78 +88,45 @@ export default new Vuex.Store({
   },
   actions: {
     async register({ commit }, payload) {
-      commit("isLoading", true);
-      try {
+      await fetchWithLoading(commit, async () => {
         await fetch("http://localhost:9999/api/v1/auth/register", {
           method: "POST",
           body: JSON.stringify(payload),
         });
-      } catch (err) {
-        console.log(err);
-        commit("isLoading", false);
-      } finally {
-        commit("isLoading", false);
-      }
+      });
     },
 
     async login({ commit }, payload) {
-      commit("isLoading", true);
-      try {
-        // its not working with axios
-        // const res = await authApi.post(`/auth/register`, payload);
+      await fetchWithLoading(commit, async () => {
         const res = await fetch("http://localhost:9999/api/v1/auth/login", {
           method: "POST",
           body: JSON.stringify(payload),
         });
-        const data = await res.json(); // { token: string }
+        const data = await res.json();
         commit("setToken", data.token);
-      } catch (err) {
-        console.log(err);
-        commit("isLoading", false);
-      } finally {
-        commit("isLoading", false);
-      }
+      });
     },
 
     async getProfile({ commit, getters }) {
-      commit("isLoading", true);
-      try {
-        // const res = await fetch("http://localhost:9999/api/v1/u/profile", {
-        //   method: "GET",
-        //   headers: {
-        //     "Authorization": `Bearer ${getters["getToken"]}`,
-        //   },
-        //   // mode: "no-cors",
-        // });
-        const res = await authApi.get("/u/profile", {
+      await fetchWithLoading(commit, async () => {
+        const res = await fetch("https://localhost:9999/api/v1/u/profile", {
+          methods: "GET",
           headers: {
-            "Authorization": `Bearer ${getters["getToken"]}`,
+            Authorization: `Bearer ${getters["getToken"]}`,
           },
         });
         console.log(res);
-        // const data = await res.json();
-        // console.log(data);
-      } catch (err) {
-        console.log(err);
-        commit("isLoading", false);
-      } finally {
-        commit("isLoading", false);
-      }
+      });
     },
 
-    async searchBooks({ commit }, payload) { // { query: string, page: number }
-      commit("isLoading", true);
-      try {
+    async searchBooks({ commit }, payload) {
+      await fetchWithLoading(commit, async () => {
         const res = await api.get(
           `/search.json?q=${payload.query}&page=${payload.page}`
         );
         commit("setBooks", res.data.docs);
         commit("setTotalPages", Math.ceil(res.data.numFound / 100));
-      } catch (err) {
-        commit("isLoading", false);
-      } finally {
-        commit("isLoading", false);
-      }
+      });
     },
 
     /**
@@ -167,17 +134,12 @@ export default new Vuex.Store({
      * @param {string} payload // author id
      */
     async fetchAuthor({ commit }, payload) {
-      commit("isLoading", true);
-      try {
-        const res = await api.get(`/authors/${payload}.json`);
+      await fetchWithLoading(commit, async () => {
+        const res = await api.get(`/authos/${payload}.json`);
         commit("setAuthor", res.data);
-      } catch (err) {
-        commit("isLoading", false);
-      } finally {
-        commit("isLoading", false);
-      }
+      });
     },
-    
+
     addFavWithToast({ commit, state }, payload) {
       const ok = state.favs.some((fav) => isEqual(fav, payload));
       if (ok) {
@@ -194,3 +156,19 @@ export default new Vuex.Store({
   },
   plugins: [vuexLocalStorage.plugin],
 });
+
+/**
+ *
+ * @param {import("vuex").Commit} commit
+ * @param {*} action
+ */
+async function fetchWithLoading(commit, action) {
+  commit("isLoading", true);
+  try {
+    await action();
+  } catch (error) {
+    commit("isLoading", false);
+  } finally {
+    commit("isLoading", false);
+  }
+}

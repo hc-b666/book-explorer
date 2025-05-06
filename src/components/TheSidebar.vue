@@ -1,5 +1,6 @@
 <template>
-  <aside @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" class="sidebar" :class="{ sidebarActive: active }" title="Sidebar">
+  <aside @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" class="sidebar" :class="{ sidebarActive: active }"
+    title="Sidebar">
     <v-list style="border-top-right-radius: 25px;">
       <v-list-item>
         <i class="material-icons">book</i>
