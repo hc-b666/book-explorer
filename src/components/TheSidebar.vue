@@ -1,6 +1,6 @@
 <template>
   <aside @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" class="sidebar" :class="{ sidebarActive: active }" title="Sidebar">
-    <v-list>
+    <v-list style="border-top-right-radius: 25px;">
       <v-list-item>
         <i class="material-icons">book</i>
         <span v-if="active" class="sidebar-title">Book Explorer</span>
@@ -48,6 +48,9 @@ export default {
   width: 64px;
   background: #fff;
   transition: width 0.3s ease;
+
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 .sidebarActive {
@@ -60,6 +63,11 @@ export default {
   display: flex;
   align-items: center;
 }
+
+// .router-link-active {
+//   padding: 4px;
+//   background-color: #42b883;
+// }
 
 .sidebar-title {
   font-size: 20px;

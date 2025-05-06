@@ -41,7 +41,7 @@ export default {
   position: relative;
   background-color: #000;
 
-  border-radius: 16px;
+  border-radius: 25px;
 
   display: flex;
   align-items: center;
@@ -60,7 +60,7 @@ export default {
   opacity: 0.6;
   background: url("../../public/background.jpg") no-repeat center center;
   background-size: cover;
-  border-radius: 16px;
+  border-radius: 25px;
 }
 
 .search-container {

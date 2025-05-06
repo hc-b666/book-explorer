@@ -1,23 +1,20 @@
 <template>
-  <!-- <v-container> -->
-    <v-app-bar rounded>
-      <nav>
-        <router-link to="/" class="navbar-logo" title="Website Logo">
-          Book Explorer
-        </router-link>
-        <router-link to="/favorites">
-          <v-btn class="btn-favorites ml-3" title="Favorites">
-            <i class="material-icons" style="margin-right: 8px;">favorite</i>
-            Favorites
-            <div>{{ getFavs.length }}</div>
-          </v-btn>
-        </router-link>
-        <!-- <router-link to="/auth/register">
+  <v-app-bar rounded>
+    <nav>
+      <router-link to="/" class="navbar-logo" title="Website Logo">
+        Book Explorer
+      </router-link>
+      <router-link to="/favorites">
+        <button class="btn-favorites" title="Favorites">
+          <i class="material-icons">favorite</i>
+          <div>{{ getFavs.length }}</div>
+        </button>
+      </router-link>
+      <!-- <router-link to="/auth/register">
           Register
         </router-link> -->
-      </nav>
-    </v-app-bar>
-  <!-- </v-container> -->
+    </nav>
+  </v-app-bar>
 </template>
 
 <script>
@@ -32,27 +29,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.rounded {
+  border-radius: 25px !important;
+}
+
+a {
+  text-decoration: none;
+  position: relative;
+}
+
 .btn-favorites {
   color: white;
-  position: relative;
-  background-color: #42b883 !important;
+  padding: 14px 16px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #42b883;
 
   div {
     color: white;
-    
+
     width: 24px;
     height: 24px;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     border-radius: 100%;
     background-color: red;
-    
+
     position: absolute;
-    left: 100%;
-    bottom: 75%;
+    left: 65%;
+    bottom: 65%;
   }
 }
 </style>

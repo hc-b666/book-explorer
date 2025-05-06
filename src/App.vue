@@ -43,6 +43,7 @@ export default {
 
   &:deep(nav) {
     width: 100%;
+    padding-inline: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
