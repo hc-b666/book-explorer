@@ -4,8 +4,10 @@
     <v-layout>
       <the-sidebar />
       <main>
-        <the-navbar />
-        <router-view />
+        <v-container>
+          <the-navbar />
+          <router-view />
+        </v-container>
       </main>
     </v-layout>
   </v-app>
@@ -29,8 +31,14 @@ export default {
 
   main {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    
+    .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
   }
 
   &:deep(nav) {

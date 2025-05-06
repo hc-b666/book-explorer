@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <!-- <v-container> -->
     <v-app-bar rounded>
       <nav>
         <router-link to="/" class="navbar-logo" title="Website Logo">
@@ -17,7 +17,7 @@
         </router-link> -->
       </nav>
     </v-app-bar>
-  </v-container>
+  <!-- </v-container> -->
 </template>
 
 <script>
@@ -33,7 +33,9 @@ export default {
 
 <style lang="scss" scoped>
 .btn-favorites {
+  color: white;
   position: relative;
+  background-color: #42b883 !important;
 
   div {
     color: white;
