@@ -40,7 +40,8 @@ a {
 
 .btn-favorites {
   color: white;
-  padding: 14px 16px;
+  height: 56px;
+  width: 56px;
   border-radius: 100%;
   display: flex;
   align-items: center;

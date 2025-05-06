@@ -37,21 +37,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.like-btn>svg {
-  width: 20px;
-  height: 20px;
-  stroke: #000;
-}
-
-.like-btn>svg:hover {
-  fill: red;
-  opacity: 0.5;
-}
-
-.liked {
-  stroke: red !important;
-  fill: red;
-}
-</style>
