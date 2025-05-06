@@ -1,17 +1,21 @@
 <template>
   <v-container>
     <v-app-bar rounded>
-      <div class="navbar">
-        <router-link to="/" class="navbar-logo">
+      <nav>
+        <router-link to="/" class="navbar-logo" title="Website Logo">
           Book Explorer
         </router-link>
         <router-link to="/favorites">
-          <v-btn class="ml-3" dark>
+          <v-btn class="btn-favorites ml-3" title="Favorites">
             <i class="material-icons" style="margin-right: 8px;">favorite</i>
-            Favorites ({{ getFavs.length }})
+            Favorites
+            <div>{{ getFavs.length }}</div>
           </v-btn>
         </router-link>
-      </div>
+        <!-- <router-link to="/auth/register">
+          Register
+        </router-link> -->
+      </nav>
     </v-app-bar>
   </v-container>
 </template>
@@ -27,18 +31,26 @@ export default {
 }
 </script>
 
-<style scoped>
-.navbar {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+<style lang="scss" scoped>
+.btn-favorites {
+  position: relative;
 
-.navbar-logo {
-  color: #000;
-  font-size: 24px;
-  font-weight: 600;
-  text-decoration: none;
+  div {
+    color: white;
+    
+    width: 24px;
+    height: 24px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 100%;
+    background-color: red;
+    
+    position: absolute;
+    left: 100%;
+    bottom: 75%;
+  }
 }
 </style>

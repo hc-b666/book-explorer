@@ -14,10 +14,6 @@ ul {
   gap: 20px;
 }
 
-.book-info {
-  padding: 16px;
-}
-
 @media (max-width: 1200px) {
   .results-container {
     grid-template-columns: repeat(4, 1fr);
@@ -34,14 +30,4 @@ ul {
   .results-container {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-.btn-like {
-  color: white !important;
-  background-color: blue !important;
-}
-
-.btn-remove {
-  color: white !important;
-  background-color: red !important;
 }

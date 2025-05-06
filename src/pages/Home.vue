@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="search-container">
-      <input type="search" v-model="query" @keydown.enter="search" placeholder="Query" />
+      <input type="search" v-model="query" @keydown.enter="search" placeholder="Query" title="Search bar" />
       <v-btn @click="search" dark>
         <i class="material-icons">search</i>
         <v-icon icon="md:home"></v-icon>

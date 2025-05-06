@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <div class="search-wrapper">
-      <input type="text" v-model="query" />
+      <input type="text" v-model="query" title="Search bar" />
     </div>
-    <div class="text-center">
-      <v-pagination v-model="page" :length="totalPages" rounded="circle"></v-pagination>
+    <div class="text-center" style="margin-bottom: 20px;">
+      <v-pagination v-model="page" :length="totalPages" rounded="circle" title="Pagination"></v-pagination>
     </div>
     <div v-if="isLoading" class="spinner-wrapper">
       <spinner />
@@ -14,10 +14,6 @@
     </div>
   </v-container>
 </template>
-
-<!-- TODO -->
-<!-- bug with fetching books -->
-<!-- when page changes it fetchs two times -->
 
 <script>
 import { debounce } from "lodash";
@@ -79,10 +75,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-h3 {
-  color: white;
 }
 
 .search-wrapper {

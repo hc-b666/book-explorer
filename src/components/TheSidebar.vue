@@ -1,5 +1,5 @@
 <template>
-  <aside @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" class="sidebar" :class="{ sidebarActive: active }">
+  <aside @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" class="sidebar" :class="{ sidebarActive: active }" title="Sidebar">
     <v-list>
       <v-list-item>
         <i class="material-icons">book</i>
@@ -44,10 +44,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button {
-  height: 100%;
-}
-
 .sidebar {
   width: 64px;
   background: #fff;

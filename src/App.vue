@@ -3,7 +3,7 @@
     <base-toaster />
     <v-layout>
       <the-sidebar />
-      <main style="width: 100%; display: flex; flex-direction: column;">
+      <main>
         <the-navbar />
         <router-view />
       </main>
@@ -24,7 +24,27 @@ export default {
 
 <style scoped lang="scss">
 .v-application {
-  background-color: #42b883 !important;
-  display: flex !important;
+  background-color: #42b883;
+  display: flex;
+
+  main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &:deep(nav) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .navbar-logo {
+      color: #000;
+      font-size: 24px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
 }
 </style>
